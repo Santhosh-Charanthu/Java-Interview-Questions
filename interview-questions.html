@@ -185,6 +185,18 @@ tr:last-child td{border-bottom:0}
 
 
 <div class="callout callout-blue" data-fence-callout="blue"><div class="callout-body"><p>A jagged array is a multidimensional array where each row can have a different number of columns. In Java, this is possible because a 2D array is implemented as an array of arrays, and each row is an independent array with its own length. A common real-world example is a student management system where each student enrolls in a different number of elective subjects. One student may take two subjects, another three, and another only one. A jagged array efficiently represents this variable-sized data without wasting memory.</p>
+</div></div>
+
+<h3>What is a string?</h3>
+
+
+<div class="callout callout-green" data-fence-callout="green"><div class="callout-body"><p>String is a class in Java that represents a sequence of characters. Strings can commonly be created using String literals or by using the new keyword. When we use a String literal, the JVM checks the String Pool and reuses an existing String object if the same literal is already present. However, using new String() creates a separate String object on the heap.</p>
+</div></div>
+<h3>Why strings are immutable?</h3>
+
+
+<div class="callout callout-yellow" data-fence-callout="yellow"><div class="callout-body"><p>Strings are immutable, which means once a String object is created, its content cannot be modified. Any operation that appears to modify a String actually creates a new String object. Immutability is important for several reasons, especially String Pool sharing, security, thread safety, and maintaining consistent hash codes when Strings are used as keys in hash-based collections.</p>
+<p>For example, if two references point to the same pooled String, allowing one reference to modify the object would affect the other reference as well. Immutability prevents this problem and makes String objects safe to share.</p>
 </div></div></article></main>
 </body>
 </html>
