@@ -192,11 +192,18 @@ tr:last-child td{border-bottom:0}
 
 <div class="callout callout-green" data-fence-callout="green"><div class="callout-body"><p>String is a class in Java that represents a sequence of characters. Strings can commonly be created using String literals or by using the new keyword. When we use a String literal, the JVM checks the String Pool and reuses an existing String object if the same literal is already present. However, using new String() creates a separate String object on the heap.</p>
 </div></div>
+
 <h3>Why strings are immutable?</h3>
 
 
 <div class="callout callout-yellow" data-fence-callout="yellow"><div class="callout-body"><p>Strings are immutable, which means once a String object is created, its content cannot be modified. Any operation that appears to modify a String actually creates a new String object. Immutability is important for several reasons, especially String Pool sharing, security, thread safety, and maintaining consistent hash codes when Strings are used as keys in hash-based collections.</p>
 <p>For example, if two references point to the same pooled String, allowing one reference to modify the object would affect the other reference as well. Immutability prevents this problem and makes String objects safe to share.</p>
+</div></div>
+
+<h3>How does garbage collection happens?</h3>
+
+
+<div class="callout callout-peach" data-fence-callout="peach"><div class="callout-body"><p>First, the JVM identifies GC Roots. Then it traces the objects reachable from those roots. Objects that are not reachable are considered garbage and become eligible for collection. Finally, the garbage collector reclaims the memory occupied by those objects.</p>
 </div></div></article></main>
 </body>
 </html>
