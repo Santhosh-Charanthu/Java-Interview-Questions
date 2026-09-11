@@ -87,21 +87,24 @@ tr:last-child td{border-bottom:0}
 
 <p>Java has a hierarchy called Throwable.</p>
 
+
 <pre><code>                 Throwable
                 /         \
              Error       Exception
                          /        \
               RuntimeException   Other Exceptions</code></pre>
+<h3><code>Error</code></h3>
 
-<div class="callout callout-green" data-fence-callout="green"><div class="callout-body"><p><strong>Error</strong></p>
-<p>Errors generally represent serious problems that applications normally should not try to recover from.</p>
+
+<div class="callout callout-green" data-fence-callout="green"><div class="callout-body"><p>Errors generally represent serious problems that applications normally should not try to recover from.</p>
 <p><strong>Examples:</strong></p>
 <p>OutOfMemoryError</p>
 <p>StackOverflowError</p>
 </div></div>
+<h3><code>Exception</code></h3>
 
-<div class="callout callout-purple" data-fence-callout="purple"><div class="callout-body"><p><strong>Exception</strong></p>
-<p>Exceptions represent situations that an application can often handle or recover from.</p>
+
+<div class="callout callout-purple" data-fence-callout="purple"><div class="callout-body"><p>Exceptions represent situations that an application can often handle or recover from.</p>
 <p><strong>Examples:</strong></p>
 <p>IOException</p>
 <p>SQLException</p>
@@ -111,6 +114,282 @@ tr:last-child td{border-bottom:0}
 <p><strong>So in an interview:</strong></p>
 <p>Error generally represents serious JVM-level problems, while Exception represents abnormal conditions that an application can potentially handle.</p>
 </div></div>
+<h3>What Actually Happens Internally?</h3>
+
+
+<p><strong>Consider:</strong></p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Execution goes roughly like this:</p>
+
+
+<pre><code>main()
+  ↓
+println(&quot;A&quot;)
+  ↓
+10 / 0
+  ↓
+JVM detects division by zero
+  ↓
+creates ArithmeticException object
+  ↓
+searches for a matching handler
+  ↓
+no catch found in main()
+  ↓
+exception propagates
+  ↓
+JVM&#39;s default exception handler
+  ↓
+prints stack trace
+  ↓
+program terminates
+</code></pre>
+
+<p>The exception object contains</p>
+
+<pre><code>exception type
+error message  -&gt; e.getMessage()
+stack trace   -&gt; e.printStackTrace()
+</code></pre>
+
+<h3>What If the Method Doesn&#39;t Handle the Execption?</h3>
+
+
+<p>This is where exception propagation comes in.</p>
+
+
+<p>Suppose:</p>
+
+
+<pre class="language-java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">divide</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">divide</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<p>divide() doesn&#39;t handle the exception.</p>
+
+
+<p>So the exception moves upward:</p>
+
+
+<pre><code>
+divide()
+   ↓
+exception occurs
+   ↓
+divide() doesn&#39;t handle it
+   ↓
+return to main()
+   ↓
+does main() handle it?
+   ↓
+NO
+   ↓
+JVM
+</code></pre>
+
+<p>This is called exception propagation.</p>
+
+
+<h3><code>Stack Unwinding</code></h3>
+
+
+<p><strong>Suppose:</strong></p>
+
+
+<pre><code>main()
+   ↓
+methodA()
+   ↓
+methodB()
+   ↓
+methodC()
+   ↓
+exception
+
+</code></pre>
+<p>If methodC() doesn&#39;t handle it:</p>
+
+
+<pre><code>methodC()
+   ↓
+unwind
+methodB()
+   ↓
+unwind
+methodA()
+   ↓
+unwind
+main()
+</code></pre>
+<p>Java searches backward through the call stack until it finds a matching handler.</p>
+
+
+<p>This process is called <strong>Stack unwinding</strong>.</p>
+
+
+<h3>Checked vs Unchecked Exceptions</h3>
+
+
+<h2><code>Checked Exception</code></h2>
+
+
+<p>Compiler forces you to deal with it.</p>
+
+
+<p><strong>Example:</strong></p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">FileReader</span> file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+
+<p>FileReader can throw: <strong>FileNotFoundException</strong></p>
+
+
+<p>So Java requires you to either:</p>
+
+
+<p><strong>Handle it</strong></p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token class-name">FileReader</span> file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">FileNotFoundException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"File not found"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<p>or <strong>declare it</strong>:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">FileNotFoundException</span> <span class="token punctuation">{</span>
+
+    <span class="token class-name">FileReader</span> file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+
+<p>That&#39;s why it&#39;s called checked — the compiler checks it.</p>
+
+
+<h2><code>Unchecked Exceptions</code></h2>
+
+
+<p>Unchecked exceptions are subclasses of:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">Runtime</span> <span class="token class-name">Exceptions</span>
+</code></pre>
+
+<p><strong>Examples:</strong></p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">NullPointerException</span>
+<span class="token class-name">ArithmeticException</span>
+<span class="token class-name">ArrayIndexOutOfBoundsException</span>
+<span class="token class-name">IllegalArgumentException</span>
+</code></pre>
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+</code></pre>
+
+<p>Java doesn&#39;t force:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span><span class="token operator">-</span><span class="token keyword">catch</span>
+</code></pre>
+
+<p>You can simply write:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+</code></pre>
+
+<p>and compilation succeeds.</p>
+
+
+<p><strong>The problem happens at runtime.</strong></p>
+
+
+<h1>14. <code>throw</code> vs <code>throws</code></h1>
+
+
+<p>This confuses almost everyone initially 😄.</p>
+
+
+<h2><code>throw</code></h2>
+
+
+<p>Used to <strong>actually throw an exception</strong>.</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"Age cannot be negative"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">checkAge</span><span class="token punctuation">(</span><span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>age <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span>
+            <span class="token string">"Age cannot be negative"</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>You&#39;re saying:</p>
+
+
+<blockquote>
+<p>&quot;An invalid condition has occurred. I&#39;m throwing an exception.&quot;</p>
+</blockquote>
+
+
+<hr>
+
+
+<h2><code>throws</code></h2>
+
+
+<p>Used in a method declaration to <strong>declare that a method may throw an exception</strong>.</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">{</span>
+
+    <span class="token class-name">FileReader</span> file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span></code></pre>
+
+<p>You&#39;re saying:</p>
+
+
+<div class="callout callout-cyan" data-fence-callout="cyan"><div class="callout-body"><p>This method might throw IOException. Whoever calls me should deal with it.</p>
+</div></div>
+
+<p>So remember:</p>
+
+
+<pre class="language-text"><code class="language-text">throw  → actually throws an exception
+throws → declares possible exceptions</code></pre>
 </article></main>
 </body>
 </html>
