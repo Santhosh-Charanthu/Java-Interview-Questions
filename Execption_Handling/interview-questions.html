@@ -1,8 +1,1600 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>interview-questions.html</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>🔥 Top 15 Java Exception Handling Interview Questions</title>
+<style>
+:root{color-scheme:light;--fg:#0f172a;--muted:#64748b;--border:#e2e8f0;--accent:#0284c7;--accent-soft:#e0f2fe;--card:#ffffff;--code-bg:#0f172a;--code-fg:#e2e8f0;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:linear-gradient(180deg,#e0f2fe 0%,#f0f9ff 60%,#ffffff 100%);color:var(--fg);min-height:100vh;padding:32px 16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.page{max-width:920px;margin:0 auto}
+.doc{background:var(--card);border-radius:18px;box-shadow:0 20px 60px -20px rgba(2,132,199,.25),0 4px 14px -4px rgba(15,23,42,.08);padding:clamp(24px,5vw,60px);border:1px solid rgba(148,163,184,.2)}
+.title-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;margin:0 0 1.2em;padding-bottom:.5em;border-bottom:1px solid var(--border)}
+.title-row h1{margin:0;padding:0;border:0;flex:1 1 auto;min-width:0}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;border:1px solid rgba(2,132,199,.2);white-space:nowrap;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;box-shadow:0 1px 2px rgba(2,132,199,.08);flex:0 0 auto;margin-left:auto;margin-right:8px}
+.badge:hover{background:#bae6fd;transform:translateY(-1px);box-shadow:0 6px 16px -6px rgba(2,132,199,.35)}
+h1,h2,h3,h4,h5,h6{font-weight:700;line-height:1.25;margin:1.8em 0 .6em;letter-spacing:-.01em}
+h1{font-size:2.15rem;border-bottom:1px solid var(--border);padding-bottom:.4em;margin-top:0}
+h2{font-size:1.6rem}
+h3{font-size:1.3rem}
+h4{font-size:1.1rem}
+p{margin:.9em 0}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+strong{font-weight:700}
+del{color:var(--muted)}
+ul,ol{margin:.8em 0;padding-left:1.6em}
+li{margin:.25em 0}
+blockquote{margin:1.2em 0;padding:.5em 1.1em;border-left:4px solid var(--accent);background:var(--accent-soft);color:#334155;border-radius:0 .5rem .5rem 0}
+hr{margin:2em 0;border:0;border-top:1px solid var(--border)}
+img{max-width:100%;border-radius:.5rem;margin:1em 0}
+code{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.9em;padding:.15em .4em;background:#f1f5f9;color:#0c4a6e;border-radius:.35rem;border:1px solid var(--border)}
+pre{margin:1.2em 0;padding:1rem 1.1rem;background:var(--code-bg);color:var(--code-fg);border-radius:.7rem;overflow-x:auto;font-size:.9rem;line-height:1.55;border:1px solid #1e293b}
+pre code{background:transparent;border:0;padding:0;color:inherit;font-size:inherit}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:1.2em 0;display:table;table-layout:auto;border:1px solid var(--border);border-radius:.6rem;overflow:hidden}
+thead{background:var(--accent-soft)}
+th,td{padding:.65em .9em;border-bottom:1px solid var(--border);text-align:left}
+th{font-weight:600}
+tr:last-child td{border-bottom:0}
+.callout{margin:1.5em 0;padding:1rem 1.1rem;border-radius:.8rem;border:1px solid var(--co-b,var(--border));background:var(--co-bg,#f8fafc);box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.callout-title{display:flex;align-items:center;gap:.55rem;font-weight:700;font-size:1rem;margin-bottom:.5rem;color:var(--co-fg,var(--fg))}
+.callout-icon{font-size:1.15rem;line-height:1}
+.callout-body>:first-child{margin-top:0}
+.callout-body>:last-child{margin-bottom:0}
+.callout-note{--co-bg:#eff6ff;--co-b:#bfdbfe;--co-fg:#1e40af}
+.callout-important{--co-bg:#faf5ff;--co-b:#e9d5ff;--co-fg:#6b21a8}
+.callout-warning{--co-bg:#fffbeb;--co-b:#fde68a;--co-fg:#92400e}
+.callout-tip{--co-bg:#ecfdf5;--co-b:#a7f3d0;--co-fg:#065f46}
+.callout-question{--co-bg:#ecfeff;--co-b:#a5f3fc;--co-fg:#155e75}
+.callout-observation{--co-bg:#f0fdfa;--co-b:#99f6e4;--co-fg:#115e59}
+.callout-complexity{--co-bg:#fef2f2;--co-b:#fecaca;--co-fg:#991b1b}
+.callout-summary{--co-bg:#eef2ff;--co-b:#c7d2fe;--co-fg:#3730a3}
+.callout-advantage{--co-bg:#ecfdf5;--co-b:#a7f3d0;--co-fg:#065f46}
+.callout-disadvantage{--co-bg:#fef2f2;--co-b:#fecaca;--co-fg:#991b1b}
+.callout-blue{--co-bg:#eff6ff;--co-b:#bfdbfe;--co-fg:#1e40af}
+.callout-green{--co-bg:#ecfdf5;--co-b:#a7f3d0;--co-fg:#065f46}
+.callout-red{--co-bg:#fef2f2;--co-b:#fecaca;--co-fg:#991b1b}
+.callout-yellow{--co-bg:#fffbeb;--co-b:#fde68a;--co-fg:#92400e}
+.callout-orange{--co-bg:#fff7ed;--co-b:#fed7aa;--co-fg:#9a3412}
+.callout-purple{--co-bg:#faf5ff;--co-b:#e9d5ff;--co-fg:#6b21a8}
+.callout-gray{--co-bg:#f8fafc;--co-b:#e2e8f0;--co-fg:#475569}
+.token.comment,.token.prolog,.token.doctype,.token.cdata{color:#94a3b8}
+.token.punctuation{color:#cbd5e1}
+.token.property,.token.tag,.token.constant,.token.symbol,.token.deleted{color:#fca5a5}
+.token.boolean,.token.number{color:#fdba74}
+.token.selector,.token.attr-name,.token.string,.token.char,.token.builtin,.token.inserted{color:#86efac}
+.token.operator,.token.entity,.token.url,.token.variable{color:#7dd3fc}
+.token.atrule,.token.attr-value,.token.function,.token.class-name{color:#f0abfc}
+.token.keyword{color:#c4b5fd}
+.token.regex,.token.important{color:#fcd34d}
+@media (max-width:640px){body{padding:12px 8px}.doc{padding:20px 16px;border-radius:12px}h1{font-size:1.7rem}.title-row{align-items:flex-start}.badge{font-size:12px;padding:5px 10px}}
+@media print{body{background:#fff;padding:0}.doc{box-shadow:none;border:0;padding:0;max-width:none}}
+</style>
 </head>
 <body>
+<main class="page"><article class="doc"><p>Absolutely. Since you&#39;ve already covered <strong>checked vs unchecked exceptions</strong>, let&#39;s leave that aside and focus on the other <strong>high-value exception-handling questions</strong> interviewers commonly ask.</p>
+
+
+<p>I&#39;ll phrase the answers at the level you can <strong>actually speak in an interview</strong>, followed by a small example where useful.</p>
+
+
+<h1>🔥 Top 15 Java Exception Handling Interview Questions</h1>
+
+
+<h2>1. What is exception handling in Java?</h2>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>Exception handling is a mechanism in Java used to handle abnormal conditions that occur during program execution. It allows us to handle exceptions gracefully instead of allowing them to terminate the program unexpectedly. Java provides <code>try</code>, <code>catch</code>, <code>finally</code>, <code>throw</code>, and <code>throws</code> for exception handling.</p>
+</blockquote>
+
+
+<p>For example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArithmeticException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Cannot divide by zero"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>The important idea is:</p>
+
+
+<pre class="language-text"><code class="language-text">Problem occurs
+     ↓
+Exception object is created
+     ↓
+Matching handler is searched
+     ↓
+Exception is handled
+     ↓
+Program can continue</code></pre>
+
+<hr>
+
+
+<h1>2. What is the difference between <code>throw</code> and <code>throws</code>?</h1>
+
+
+<p>This is <strong>extremely common</strong>.</p>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p><code>throw</code> is used to explicitly throw an exception object, whereas <code>throws</code> is used in a method declaration to indicate that the method may pass one or more exceptions to its caller.</p>
+</blockquote>
+
+
+<h3><code>throw</code></h3>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>age <span class="token operator">&lt;</span> <span class="token number">18</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"Invalid age"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>You&#39;re actually throwing the exception.</p>
+
+
+<h3><code>throws</code></h3>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">IOException</span> <span class="token punctuation">{</span>
+    <span class="token comment">// file operation</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>You&#39;re declaring that the method may throw <code>IOException</code>.</p>
+
+
+<h3>Easy memory trick:</h3>
+
+
+<pre class="language-text"><code class="language-text">throw  → "I'm throwing it NOW."
+throws → "This method MAY throw it."</code></pre>
+
+<hr>
+
+
+<h1>3. What is the difference between <code>final</code>, <code>finally</code>, and <code>finalize()</code>?</h1>
+
+
+<p>🔥 Classic interview question.</p>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p><code>final</code> is a keyword used to restrict variables, methods, and classes. <code>finally</code> is a block used in exception handling that is generally executed after <code>try</code>/<code>catch</code>. <code>finalize()</code> was a method historically associated with garbage collection, but it has been deprecated and should not be relied upon for resource cleanup.</p>
+</blockquote>
+
+
+<p>Examples:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">final</span> <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span></code></pre>
+
+<p>The variable cannot be reassigned.</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// code</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token comment">// cleanup</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>And <code>finalize()</code> is <strong>not recommended for modern Java code</strong>.</p>
+
+
+<p>For resource cleanup, prefer:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token class-name">Resource</span> r <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// use resource</span>
+<span class="token punctuation">}</span></code></pre>
+
+<hr>
+
+
+<h1>4. What is the purpose of the <code>finally</code> block?</h1>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>The <code>finally</code> block is used for code that should generally execute after the <code>try</code> and <code>catch</code> blocks, regardless of whether an exception occurred. It is commonly used for cleanup operations such as releasing resources.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Opening resource"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Exception"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Cleanup"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Typical use:</p>
+
+
+<pre class="language-text"><code class="language-text">Open resource
+     ↓
+Use resource
+     ↓
+Exception?
+   /     \
+ Yes      No
+ ↓        ↓
+catch    continue
+   \      /
+    finally
+       ↓
+   cleanup</code></pre>
+
+<p>However, for resources like files and database connections, <strong>try-with-resources is generally preferred</strong>.</p>
+
+
+<hr>
+
+
+<h1>5. Is <code>finally</code> always executed?</h1>
+
+
+<p>This is a <strong>tricky one</strong>.</p>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>No, <code>finally</code> is not absolutely guaranteed to execute. Under normal control flow, it executes whether an exception occurs or not. However, there are situations such as JVM termination using <code>System.exit()</code>, JVM crashes, or the process being forcibly terminated where it may not execute.</p>
+</blockquote>
+
+
+<p>For example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Try"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Finally"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>The JVM terminates, so <code>finally</code> does not get a chance to execute.</p>
+
+
+<h3>Interview-safe wording:</h3>
+
+
+<blockquote>
+<p>&quot;<code>finally</code> executes in normal control flow, but it is not an absolute guarantee.&quot;</p>
+</blockquote>
+
+
+<hr>
+
+
+<h1>6. What happens if an exception occurs inside the <code>try</code> block?</h1>
+
+
+<p>Suppose:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArithmeticException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"D"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>Output:</p>
+
+
+<pre class="language-text"><code class="language-text">A
+C
+D</code></pre>
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>When an exception occurs inside a <code>try</code> block, the JVM stops normal execution of the remaining statements in that <code>try</code> block and looks for a matching <code>catch</code> block. If a matching handler is found, it executes the <code>catch</code> block and then continues after the exception-handling structure.</p>
+</blockquote>
+
+
+<p>So:</p>
+
+
+<pre class="language-text"><code class="language-text">A
+↓
+Exception
+↓
+B skipped
+↓
+catch
+↓
+C
+↓
+D</code></pre>
+
+<hr>
+
+
+<h1>7. What is exception propagation?</h1>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>Exception propagation is the process by which an exception moves from the method where it occurred to its calling methods until a matching exception handler is found.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">methodC</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">methodC</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Suppose <code>main()</code> calls:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArithmeticException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Handled"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>The flow is:</p>
+
+
+<pre class="language-text"><code class="language-text">main()
+  ↓
+methodA()
+  ↓
+methodB()
+  ↓
+methodC()
+  ↓
+exception
+  ↓
+methodB doesn't handle
+  ↓
+methodA doesn't handle
+  ↓
+main handles</code></pre>
+
+<p>This is <strong>exception propagation</strong>.</p>
+
+
+<hr>
+
+
+<h1>8. What is stack unwinding?</h1>
+
+
+<p>This is closely related to propagation but <strong>not exactly the same thing</strong>.</p>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>Stack unwinding is the process of removing method call frames from the call stack when an exception propagates because the current method doesn&#39;t have a matching exception handler.</p>
+</blockquote>
+
+
+<p>Imagine:</p>
+
+
+<pre class="language-text"><code class="language-text">main()
+  ↓
+A()
+  ↓
+B()
+  ↓
+C()
+  ↓
+Exception</code></pre>
+
+<p>If <code>C()</code> doesn&#39;t handle it:</p>
+
+
+<pre class="language-text"><code class="language-text">C() removed from active execution
+       ↓
+B() examined
+       ↓
+B() doesn't handle
+       ↓
+A() examined
+       ↓
+A() doesn't handle
+       ↓
+main() examined
+       ↓
+handler found</code></pre>
+
+<p>So remember:</p>
+
+
+<blockquote>
+<p><strong>Propagation = exception moving upward.</strong>
+<strong>Stack unwinding = call stack being unwound while searching upward.</strong></p>
+</blockquote>
+
+
+<p>🔥 This distinction makes a strong interview impression.</p>
+
+
+<hr>
+
+
+<h1>9. Can we have a <code>try</code> block without <code>catch</code>?</h1>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>Yes. A <code>try</code> block can exist without a <code>catch</code> block if it is followed by a <code>finally</code> block.</p>
+</blockquote>
+
+
+<p>Valid:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// code</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token comment">// cleanup</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>But this is invalid:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// code</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>A <code>try</code> must be followed by at least one:</p>
+
+
+<pre class="language-text"><code class="language-text">catch</code></pre>
+
+<p>or</p>
+
+
+<pre class="language-text"><code class="language-text">finally</code></pre>
+
+<hr>
+
+
+<h1>10. Can we have multiple <code>catch</code> blocks?</h1>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>Yes. We can have multiple <code>catch</code> blocks to handle different types of exceptions differently. The JVM chooses the first compatible catch block.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// risky code</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArithmeticException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Arithmetic problem"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">NullPointerException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Null reference"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Other exception"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<div class="callout callout-important"><div class="callout-title"><span class="callout-icon">⭐</span><span>Important rule</span></div><div class="callout-body"><p>The more specific exception should come <strong>before</strong> the more general exception.</p>
+<p>Correct:</p>
+<pre class="language-java"><code class="language-java"><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArithmeticException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre><p>Incorrect:</p>
+<pre class="language-java"><code class="language-java"><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArithmeticException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre><p>Because:</p>
+<pre class="language-text"><code class="language-text">Exception
+   ↑
+ArithmeticException</code></pre><p>The first catch would already cover <code>ArithmeticException</code>.</p>
+</div></div>
+
+<h1>11. Can we have <code>catch</code> without <code>try</code>?</h1>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>No. A <code>catch</code> block must always be associated with a <code>try</code> block.</p>
+</blockquote>
+
+
+<p>Invalid:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Valid:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// code</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>The same applies to <code>finally</code>: it cannot exist independently.</p>
+
+
+<hr>
+
+
+<h1>12. What happens if an exception is not handled anywhere?</h1>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>If an exception isn&#39;t handled in the current method, it propagates up the call stack. If it reaches the top of the thread&#39;s call stack without finding a matching handler, the JVM&#39;s uncaught-exception mechanism handles it, typically printing the exception&#39;s stack trace and terminating that thread.</p>
+</blockquote>
+
+
+<p>For example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>There is no handler.</p>
+
+
+<p>So you&#39;ll typically see:</p>
+
+
+<pre class="language-text"><code class="language-text">Exception in thread "main"
+java.lang.ArithmeticException: / by zero</code></pre>
+
+<p>And:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>will not execute.</p>
+
+
+<hr>
+
+
+<h1>13. What is a stack trace?</h1>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>A stack trace is information about the sequence of method calls that were active when an exception occurred. It helps identify where the exception originated and how execution reached that point.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>You may see something like:</p>
+
+
+<pre class="language-text"><code class="language-text">ArithmeticException: / by zero
+
+at Main.methodB(Main.java:5)
+at Main.methodA(Main.java:9)
+at Main.main(Main.java:13)</code></pre>
+
+<p>Read it roughly from the top:</p>
+
+
+<pre class="language-text"><code class="language-text">methodB()
+   ↓
+called by methodA()
+   ↓
+called by main()</code></pre>
+
+<p>The line number tells you where the exception originated.</p>
+
+
+<p>You can manually print it using:</p>
+
+
+<pre class="language-java"><code class="language-java">e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<hr>
+
+
+<h1>14. What is try-with-resources?</h1>
+
+
+<p>🔥 Very important for practical Java.</p>
+
+
+<h3>Interview answer</h3>
+
+
+<blockquote>
+<p>Try-with-resources is a Java feature used to automatically close resources after they are used. The resource must implement <code>AutoCloseable</code>. It eliminates the need to explicitly close resources in a <code>finally</code> block.</p>
+</blockquote>
+
+
+<p>Traditional approach:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">FileInputStream</span> file <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+    file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>file <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        file<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Try-with-resources:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token class-name">FileInputStream</span> file <span class="token operator">=</span>
+         <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// use file</span>
+
+<span class="token punctuation">}</span></code></pre>
+
+<p>Java automatically closes <code>file</code>.</p>
+
+
+<p>This is commonly used with:</p>
+
+
+<ul>
+<li><code>FileInputStream</code></li>
+<li><code>BufferedReader</code></li>
+<li>database connections</li>
+<li>statements</li>
+<li>result sets</li>
+</ul>
+
+
+<hr>
+
+
+<h1>15. What happens if both <code>try</code> and <code>finally</code> have a <code>return</code> statement?</h1>
+
+
+<p>🔥 <strong>This is a classic trap question.</strong></p>
+
+
+<p>Consider:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">20</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>What does it return?</p>
+
+
+<pre class="language-text"><code class="language-text">20</code></pre>
+
+<h3>Why?</h3>
+
+
+<p>The <code>return 10</code> from <code>try</code> is prepared, but before the method actually completes, <code>finally</code> executes.</p>
+
+
+<p>Then:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">return</span> <span class="token number">20</span><span class="token punctuation">;</span></code></pre>
+
+<p>overrides the earlier return.</p>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>If both <code>try</code> and <code>finally</code> contain a return statement, the return from <code>finally</code> takes precedence and suppresses the return from <code>try</code>. However, using <code>return</code> inside <code>finally</code> is strongly discouraged because it can hide exceptions and make control flow difficult to understand.</p>
+</blockquote>
+
+
+<p>For example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"Problem"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>The exception can effectively be suppressed by the <code>return</code> in <code>finally</code>.</p>
+
+
+<p>So:</p>
+
+
+<blockquote>
+<p>🚨 <strong>Never use <code>return</code> in <code>finally</code> unless you have a very specific reason.</strong></p>
+</blockquote>
+
+
+<hr>
+
+
+<h1>⭐ 5 Bonus Questions You Should Also Know</h1>
+
+
+<p>These are slightly more advanced and are worth preparing once the top 15 are comfortable.</p>
+
+
+<h3>16. Can we throw an exception from a <code>finally</code> block?</h3>
+
+
+<p>Yes.</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"Error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>But it can <strong>mask an exception</strong> that was already being propagated, so it should be used carefully.</p>
+
+
+<hr>
+
+
+<h3>17. Can one <code>catch</code> block handle multiple exceptions?</h3>
+
+
+<p>Yes, using <strong>multi-catch</strong>:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// code</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> <span class="token operator">|</span> <span class="token class-name">SQLException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Operation failed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>This was introduced in Java 7.</p>
+
+
+<hr>
+
+
+<h3>18. What is a custom exception?</h3>
+
+
+<p>A custom exception is an exception class created by the developer for an application&#39;s specific situation.</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">UserNotFoundException</span>
+        <span class="token keyword">extends</span> <span class="token class-name">RuntimeException</span> <span class="token punctuation">{</span>
+
+    <span class="token class-name">UserNotFoundException</span><span class="token punctuation">(</span><span class="token class-name">String</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Then:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">UserNotFoundException</span><span class="token punctuation">(</span>
+    <span class="token string">"User not found"</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>This is extremely common in Spring Boot applications.</p>
+
+
+<hr>
+
+
+<h3>19. What is exception chaining?</h3>
+
+
+<p>Exception chaining means preserving the original exception as the <strong>cause</strong> of another exception.</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token comment">// database operation</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">SQLException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>
+        <span class="token string">"Unable to fetch user"</span><span class="token punctuation">,</span> e
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Here:</p>
+
+
+<pre class="language-text"><code class="language-text">RuntimeException
+      ↓
+caused by
+      ↓
+SQLException</code></pre>
+
+<p>This lets you add higher-level context without losing the original cause.</p>
+
+
+<hr>
+
+
+<h3>20. What is the difference between <code>getMessage()</code> and <code>printStackTrace()</code>?</h3>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p><code>getMessage()</code> gives the exception&#39;s message:</p>
+
+
+<pre class="language-text"><code class="language-text">"File not found"</code></pre>
+
+<p><code>printStackTrace()</code> gives much more information:</p>
+
+
+<pre class="language-text"><code class="language-text">Exception type
+Message
+Call stack
+Class
+Method
+Line number</code></pre>
+
+<p>In production applications, you would normally use a proper logging framework rather than simply calling <code>printStackTrace()</code>.</p>
+
+
+<hr>
+
+
+<h1>🧠 The Exception Handling Map</h1>
+
+
+<p>If you want to organize everything you&#39;ve learned, keep this mental picture:</p>
+
+
+<pre class="language-text"><code class="language-text">                         Throwable
+                            |
+                 ┌──────────┴──────────┐
+                 ↓                     ↓
+               Error                Exception
+                                       |
+                              RuntimeException
+                                       |
+                              Unchecked exceptions
+
+
+          EXCEPTION HANDLING
+                 |
+       ┌─────────┼─────────┐
+       ↓         ↓         ↓
+     try       catch    finally
+       |
+       ├── risky code
+       ├── exception occurs
+       └── handler searched
+                    |
+                    ↓
+              Stack unwinding
+                    |
+                    ↓
+           Exception propagation
+                    |
+                    ↓
+              Matching handler</code></pre>
+
+<p>And the other important keywords:</p>
+
+
+<pre class="language-text"><code class="language-text">throw
+ ↓
+Actually throws an exception
+
+
+throws
+ ↓
+Declares that a method may throw
+
+
+try-with-resources
+ ↓
+Automatically closes resources
+
+
+custom exception
+ ↓
+Application-specific problem
+
+
+exception chaining
+ ↓
+Preserve original cause</code></pre>
+
+<h2>🎯 If I were preparing you for a Java interview</h2>
+
+
+<p>I&#39;d make sure you can confidently explain these <strong>in this order</strong>:</p>
+
+
+<ol>
+<li>What is exception handling?</li>
+<li><code>try-catch</code></li>
+<li><code>finally</code></li>
+<li>Exception propagation</li>
+<li>Stack unwinding</li>
+<li><code>throw</code> vs <code>throws</code></li>
+<li>Multiple catch blocks</li>
+<li>Try-with-resources</li>
+<li>Custom exceptions</li>
+<li>Exception chaining</li>
+<li>Stack trace</li>
+<li><code>final</code> vs <code>finally</code> vs <code>finalize()</code></li>
+<li>Multi-catch</li>
+<li><code>finally</code> + <code>return</code></li>
+<li>What happens when an exception is uncaught</li>
+</ol>
+
+
+<h2>🔥 Top 10 Interview Questions on Checked vs Unchecked Exceptions</h2>
+
+
+<h2>1. What is the difference between checked and unchecked exceptions?</h2>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p><strong>Checked exceptions are exceptions that the compiler forces us to handle or declare using <code>try-catch</code> or <code>throws</code>. Examples are <code>IOException</code>, <code>SQLException</code>, and <code>FileNotFoundException</code>.</strong></p>
+<p><strong>Unchecked exceptions are subclasses of <code>RuntimeException</code>, and the compiler does not force us to handle or declare them. Examples are <code>NullPointerException</code>, <code>ArithmeticException</code>, and <code>ArrayIndexOutOfBoundsException</code>.</strong></p>
+<p>Both exceptions occur at runtime; the term <em>checked</em> refers to the fact that the <strong>compiler checks whether we have handled or declared the exception</strong>.</p>
+</blockquote>
+
+
+<h3>Remember:</h3>
+
+
+<pre class="language-text"><code class="language-text">Checked   → Compiler forces you
+Unchecked → Compiler doesn't force you</code></pre>
+
+<hr>
+
+
+<h1>2. Why are checked exceptions called &quot;checked&quot;?</h1>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>They are called checked exceptions because the <strong>compiler checks whether the programmer has handled or declared them</strong>. If we don&#39;t use <code>try-catch</code> or <code>throws</code> for a checked exception, the code will not compile.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">FileReader</span> reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>The compiler complains because <code>FileNotFoundException</code> is checked.</p>
+
+
+<p>We need:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">FileNotFoundException</span> <span class="token punctuation">{</span>
+    <span class="token class-name">FileReader</span> reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>or:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token class-name">FileReader</span> reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">FileNotFoundException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// handle</span>
+<span class="token punctuation">}</span></code></pre>
+
+<div class="callout callout-important"><div class="callout-title"><span class="callout-icon">⭐</span><span>Important ⚠️</span></div><div class="callout-body"><p>Don&#39;t say:</p>
+<blockquote>
+<p>❌ &quot;Checked exceptions are checked at compile time and occur at compile time.&quot;</p>
+</blockquote>
+<p>The <strong>exception occurs at runtime</strong>.</p>
+<p>Only the <strong>requirement to handle/declare it</strong> is checked by the compiler.</p>
+</div></div>
+
+<h1>3. Are unchecked exceptions checked by the JVM?</h1>
+
+
+<p>This is a slightly tricky question.</p>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>No. The distinction between checked and unchecked exceptions is primarily about <strong>compiler enforcement</strong>. The JVM can throw both checked and unchecked exceptions at runtime. For unchecked exceptions, the compiler simply doesn&#39;t require us to catch or declare them.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span></code></pre>
+
+<p>This compiles successfully.</p>
+
+
+<p>But at runtime:</p>
+
+
+<pre class="language-text"><code class="language-text">ArithmeticException</code></pre>
+
+<p>occurs.</p>
+
+
+<p>So:</p>
+
+
+<pre class="language-text"><code class="language-text">Compiler
+   ↓
+enforces checked exceptions
+
+JVM
+   ↓
+handles exceptions during runtime</code></pre>
+
+<hr>
+
+
+<h1>4. What happens if we don&#39;t handle a checked exception?</h1>
+
+
+<p>Suppose:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token class-name">FileReader</span> reader <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>If a checked exception is neither caught using <code>try-catch</code> nor declared using <code>throws</code>, the program will fail to compile. The compiler reports that the exception must be caught or declared to be thrown.</p>
+</blockquote>
+
+
+<p>For example:</p>
+
+
+<pre class="language-text"><code class="language-text">unreported exception FileNotFoundException;
+must be caught or declared to be thrown</code></pre>
+
+<p>So:</p>
+
+
+<pre class="language-text"><code class="language-text">Checked exception
+       ↓
+catch OR throws
+       ↓
+Mandatory</code></pre>
+
+<hr>
+
+
+<h1>5. Can we handle an unchecked exception using <code>try-catch</code>?</h1>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>Yes. Unchecked exceptions can also be caught using <code>try-catch</code>. The difference is that the compiler does not <strong>force</strong> us to handle them.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ArithmeticException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Cannot divide by zero"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>This is completely valid.</p>
+
+
+<p>The important distinction is:</p>
+
+
+<pre class="language-text"><code class="language-text">Checked exception
+→ handling is mandatory
+
+Unchecked exception
+→ handling is optional</code></pre>
+
+<p>🔥 This is a common follow-up question.</p>
+
+
+<hr>
+
+
+<h1>6. Can we use <code>throws</code> with an unchecked exception?</h1>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>Yes. We can declare an unchecked exception using <code>throws</code>, but it is not mandatory because unchecked exceptions are not checked by the compiler.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">calculate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ArithmeticException</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>This is valid.</p>
+
+
+<p>But this is also valid:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">void</span> <span class="token function">calculate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Because <code>ArithmeticException</code> is unchecked.</p>
+
+
+<p>So:</p>
+
+
+<pre class="language-text"><code class="language-text">Checked:
+throws → sometimes required
+
+Unchecked:
+throws → optional</code></pre>
+
+<hr>
+
+
+<h1>7. How do you identify whether an exception is checked or unchecked?</h1>
+
+
+<p>This is a <strong>very good interview question</strong>.</p>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>We can look at the exception&#39;s position in the exception hierarchy. If an exception is a subclass of <code>RuntimeException</code>, it is unchecked. Exceptions that extend <code>Exception</code> but are not under <code>RuntimeException</code> are generally checked.</p>
+</blockquote>
+
+
+<p>For example:</p>
+
+
+<pre class="language-text"><code class="language-text">Throwable
+   |
+   Exception
+   |
+   RuntimeException
+   |
+   NullPointerException</code></pre>
+
+<p>Therefore:</p>
+
+
+<pre class="language-text"><code class="language-text">NullPointerException
+        ↓
+RuntimeException
+        ↓
+Unchecked</code></pre>
+
+<p>Whereas:</p>
+
+
+<pre class="language-text"><code class="language-text">Throwable
+   |
+ Exception
+   |
+ IOException</code></pre>
+
+<p>Therefore:</p>
+
+
+<pre class="language-text"><code class="language-text">IOException
+    ↓
+Checked</code></pre>
+
+<h3>Shortcut 🧠</h3>
+
+
+<blockquote>
+<p><strong><code>RuntimeException</code> → Unchecked</strong></p>
+</blockquote>
+
+
+<hr>
+
+
+<h1>8. Why is <code>NullPointerException</code> unchecked?</h1>
+
+
+<p>This is where interviewers test whether you <strong>understand the concept</strong> rather than memorized it.</p>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p><code>NullPointerException</code> is unchecked because it generally indicates a programming error or invalid program state, such as trying to invoke a method on a null reference. Java doesn&#39;t force developers to catch it because catching it everywhere would often hide programming bugs. Instead, the programmer is generally expected to prevent or fix the invalid state.</p>
+</blockquote>
+
+
+<p>Example:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+name<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>This produces:</p>
+
+
+<pre class="language-text"><code class="language-text">NullPointerException</code></pre>
+
+<p>You <em>can</em> catch it:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">NullPointerException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Name is null"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>But usually the better solution is to fix the underlying problem:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>name <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    name<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<hr>
+
+
+<h1>9. Can we create our own checked and unchecked exceptions?</h1>
+
+
+<p>🔥 <strong>Very important for real projects.</strong></p>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>Yes. We can create custom exceptions. If our custom exception extends <code>Exception</code>, it becomes a checked exception. If it extends <code>RuntimeException</code>, it becomes an unchecked exception.</p>
+</blockquote>
+
+
+<h3>Custom checked exception:</h3>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">InvalidAgeException</span>
+        <span class="token keyword">extends</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">InvalidAgeException</span><span class="token punctuation">(</span><span class="token class-name">String</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Because it extends:</p>
+
+
+<pre class="language-text"><code class="language-text">Exception</code></pre>
+
+<p>it is <strong>checked</strong>.</p>
+
+
+<hr>
+
+
+<h3>Custom unchecked exception:</h3>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">UserNotFoundException</span>
+        <span class="token keyword">extends</span> <span class="token class-name">RuntimeException</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">UserNotFoundException</span><span class="token punctuation">(</span><span class="token class-name">String</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+<p>Because it extends:</p>
+
+
+<pre class="language-text"><code class="language-text">RuntimeException</code></pre>
+
+<p>it is <strong>unchecked</strong>.</p>
+
+
+<h3>Remember:</h3>
+
+
+<pre class="language-text"><code class="language-text">extends Exception
+       ↓
+Checked
+
+
+extends RuntimeException
+       ↓
+Unchecked</code></pre>
+
+<hr>
+
+
+<h1>10. When should you use checked vs unchecked exceptions?</h1>
+
+
+<p>🔥 This is probably the <strong>best practical interview question</strong>.</p>
+
+
+<h3>Interview answer:</h3>
+
+
+<blockquote>
+<p>Checked exceptions are generally appropriate when the caller can reasonably be expected to recover from an exceptional condition, such as an I/O operation failing or a file not being available.</p>
+<p>Unchecked exceptions are generally appropriate for programming errors, invalid arguments, or situations where the caller cannot reasonably recover at that point. They are also commonly used for custom business exceptions in modern Java applications, including many Spring applications.</p>
+</blockquote>
+
+
+<p>For example:</p>
+
+
+<h3>Checked</h3>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">FileReader</span> reader <span class="token operator">=</span>
+    <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>The file might not exist.</p>
+
+
+<p>The application could:</p>
+
+
+<pre class="language-text"><code class="language-text">File not found
+      ↓
+Ask user for another file</code></pre>
+
+<p>That&#39;s a reasonable recovery scenario.</p>
+
+
+<hr>
+
+
+<h3>Unchecked</h3>
+
+
+<pre class="language-java"><code class="language-java"><span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+user<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>The solution isn&#39;t usually:</p>
+
+
+<pre class="language-java"><code class="language-java"><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">NullPointerException</span><span class="token punctuation">)</span></code></pre>
+
+<p>The solution is to fix why <code>user</code> is null.</p>
+
+
+<hr>
+
+
+<h1>🧠 Bonus: One question interviewers LOVE</h1>
+
+
+<h2>&quot;Is <code>Exception</code> itself checked or unchecked?&quot;</h2>
+
+
+<p>This one catches people.</p>
+
+
+<h3>Answer:</h3>
+
+
+<blockquote>
+<p><code>Exception</code> itself is not a specific checked/unchecked distinction. The important distinction is whether the exception is under <code>RuntimeException</code>. Exceptions that extend <code>Exception</code> but not <code>RuntimeException</code> are checked, while <code>RuntimeException</code> and its subclasses are unchecked.</p>
+</blockquote>
+
+
+<p>Think:</p>
+
+
+<pre class="language-text"><code class="language-text">                 Throwable
+                    |
+                Exception
+                /       \
+               /         \
+     RuntimeException    Other Exceptions
+            ↓                  ↓
+       UNCHECKED             CHECKED</code></pre>
+
+<p>Examples:</p>
+
+
+<pre class="language-text"><code class="language-text">RuntimeException
+ ├── NullPointerException
+ ├── ArithmeticException
+ ├── IllegalArgumentException
+ └── IndexOutOfBoundsException
+
+Other Exception
+ ├── IOException
+ ├── SQLException
+ └── FileNotFoundException</code></pre>
+
+<hr>
+
+
+<h1>🎯 Your 30-Second Revision</h1>
+
+
+<p>Before your interview, remember these <strong>5 rules</strong>:</p>
+
+
+<h3>Rule 1</h3>
+
+
+<blockquote>
+<p><strong>Checked = compiler forces handling/declaration.</strong></p>
+</blockquote>
+
+
+<h3>Rule 2</h3>
+
+
+<blockquote>
+<p><strong>Unchecked = compiler doesn&#39;t force handling/declaration.</strong></p>
+</blockquote>
+
+
+<h3>Rule 3</h3>
+
+
+<blockquote>
+<p><strong><code>RuntimeException</code> and its subclasses = unchecked.</strong></p>
+</blockquote>
+
+
+<h3>Rule 4</h3>
+
+
+<blockquote>
+<p><strong>Checked exceptions → <code>catch</code> or <code>throws</code> is mandatory.</strong></p>
+</blockquote>
+
+
+<h3>Rule 5</h3>
+
+
+<blockquote>
+<p><strong>Both checked and unchecked exceptions occur at runtime.</strong></p>
+</blockquote>
+
+
+<p>And the hierarchy:</p>
+
+
+<pre class="language-text"><code class="language-text">                       Throwable
+                      /         \
+                   Error       Exception
+                                |
+                       ┌────────┴─────────┐
+                       ↓                  ↓
+               RuntimeException       Other
+                       ↓              Exceptions
+                  UNCHECKED            CHECKED
+                       ↓                  ↓
+                 NullPointer          IOException
+                 Arithmetic           SQLException
+                 ArrayIndex           FileNotFound</code></pre>
+
+<p>If you can explain <strong>these 10 questions + the hierarchy without memorizing word-for-word</strong>, you&#39;re in a very good position for the Java exception-handling part of an interview. 💪</p>
+</article></main>
 </body>
 </html>
