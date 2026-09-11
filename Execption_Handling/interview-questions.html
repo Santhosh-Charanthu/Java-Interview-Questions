@@ -73,13 +73,7 @@ tr:last-child td{border-bottom:0}
 </style>
 </head>
 <body>
-<main class="page"><article class="doc"><p>Absolutely. Since you&#39;ve already covered <strong>checked vs unchecked exceptions</strong>, let&#39;s leave that aside and focus on the other <strong>high-value exception-handling questions</strong> interviewers commonly ask.</p>
-
-
-<p>I&#39;ll phrase the answers at the level you can <strong>actually speak in an interview</strong>, followed by a small example where useful.</p>
-
-
-<h1>🔥 Top 15 Java Exception Handling Interview Questions</h1>
+<main class="page"><article class="doc"><h1>🔥 Top 15 Java Exception Handling Interview Questions</h1>
 
 
 <h2>1. What is exception handling in Java?</h2>
@@ -451,8 +445,7 @@ handler found</code></pre>
 
 
 <blockquote>
-<p><strong>Propagation = exception moving upward.</strong>
-<strong>Stack unwinding = call stack being unwound while searching upward.</strong></p>
+<p><strong>Propagation = exception moving upward.</strong> <strong>Stack unwinding = call stack being unwound while searching upward.</strong></p>
 </blockquote>
 
 
@@ -544,7 +537,6 @@ handler found</code></pre>
    ↑
 ArithmeticException</code></pre><p>The first catch would already cover <code>ArithmeticException</code>.</p>
 </div></div>
-
 <h1>11. Can we have <code>catch</code> without <code>try</code>?</h1>
 
 
@@ -941,7 +933,6 @@ Line number</code></pre>
                                        |
                               Unchecked exceptions
 
-
           EXCEPTION HANDLING
                  |
        ┌─────────┼─────────┐
@@ -968,21 +959,17 @@ Line number</code></pre>
  ↓
 Actually throws an exception
 
-
 throws
  ↓
 Declares that a method may throw
-
 
 try-with-resources
  ↓
 Automatically closes resources
 
-
 custom exception
  ↓
 Application-specific problem
-
 
 exception chaining
  ↓
@@ -1083,7 +1070,6 @@ Unchecked → Compiler doesn't force you</code></pre>
 <p>The <strong>exception occurs at runtime</strong>.</p>
 <p>Only the <strong>requirement to handle/declare it</strong> is checked by the compiler.</p>
 </div></div>
-
 <h1>3. Are unchecked exceptions checked by the JVM?</h1>
 
 
@@ -1418,7 +1404,6 @@ name<span class="token punctuation">.</span><span class="token function">length<
 <pre class="language-text"><code class="language-text">extends Exception
        ↓
 Checked
-
 
 extends RuntimeException
        ↓
