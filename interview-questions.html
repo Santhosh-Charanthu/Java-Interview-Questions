@@ -175,9 +175,7 @@ tr:last-child td{border-bottom:0}
 
 
 <div class="callout callout-orange" data-fence-callout="orange"><div class="callout-body"><p>== is an operator, while .equals() is a method. For primitive data types, == compares actual values. For objects, == compares their references, meaning whether both variables point to the same object in memory. In contrast, .equals() is used to compare the logical content of objects.</p>
-</div></div>
-
-<div class="callout callout-important"><div class="callout-title"><span class="callout-icon">⭐</span><span>Important Note</span></div><div class="callout-body"><p>By default, .equals() in the Object class behaves like ==, comparing references.</p>
+<p>By default, .equals() in the Object class behaves like ==, comparing references.</p>
 <p>Classes such as String, Integer, and many others override .equals() to compare object contents.</p>
 </div></div>
 
@@ -204,6 +202,25 @@ tr:last-child td{border-bottom:0}
 
 
 <div class="callout callout-peach" data-fence-callout="peach"><div class="callout-body"><p>First, the JVM identifies GC Roots. Then it traces the objects reachable from those roots. Objects that are not reachable are considered garbage and become eligible for collection. Finally, the garbage collector reclaims the memory occupied by those objects.</p>
-</div></div></article></main>
+</div></div>
+
+<h3>What is finalize()?</h3>
+
+
+<div class="callout callout-teal" data-fence-callout="teal"><div class="callout-body"><p>finalize() was a method of the Object class that the Garbage Collector could invoke before reclaiming an object&#39;s memory.</p>
+<p>Finalization has been deprecated since Java 9 and is being removed from the Java platform. We should not use finalize() for resource cleanup.</p>
+<p><strong>Problems:</strong></p>
+<ol>
+<li>No garentee of execution.</li>
+<li>It can delay garbage collection</li>
+</ol>
+<p>The object may need special handling before its memory can be reclaimed.</p>
+<p>So finalization can make garbage collection less predictable and potentially delay reclamation.</p>
+<ol start="3">
+<li>It can hurt performance</li>
+</ol>
+<p>Finalizable objects require additional processing by the JVM, which can increase GC overhead.</p>
+</div></div>
+</article></main>
 </body>
 </html>
